@@ -1031,15 +1031,15 @@ alljoined_8_or_better['Genres'].value_counts()
 
     Drama                         18
     Documentary                   10
-    Adventure,Animation,Comedy     4
     Action,Adventure,Sci-Fi        4
-    Comedy                         3
+    Adventure,Animation,Comedy     4
+    Drama,Thriller                 3
                                   ..
-    Mystery,Thriller               1
-    Crime,Drama,Mystery            1
-    Adventure,Comedy,Crime         1
-    Drama,History,War              1
-    Documentary,Family             1
+    Drama,Sport                    1
+    Biography,Comedy,Drama         1
+    Crime                          1
+    Action                         1
+    Comedy,Documentary,Drama       1
     Name: Genres, Length: 69, dtype: int64
 
 
@@ -1245,6 +1245,8 @@ alljoined.sort_values(by = 'Domestic Gross', ascending = False)
 
 
 
+Created a master dataframe by merging the BOM dataset with the merged IMDB datasets
+
 
 ```python
 alljoined = bom_movie_gross.merge(rating_na_dropped, on = 'Title',  how = 'inner')
@@ -1274,275 +1276,8 @@ alljoined.info()
     
 
 ## Data Modeling
-Describe and justify the process for analyzing or modeling the data.
 
-***
-Questions to consider:
-* How did you analyze or model the data?
-* How did you iterate on your initial approach to make it better?
-* Why are these choices appropriate given the data and the business problem?
-***
-
-
-```python
-with plt.style.context('bmh'):
-    (alljoined.groupby(['Genres'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh', figsize = (8,6))
-    plt.title('Average Domestic Box Office Gross by Genre 2010-2018', fontsize = 19)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of Millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold') 
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-#highest grossing genre is Adventure/Drama/Sport
-```
-
-
-    
-![png](output_36_0.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (alljoined_8_or_better.groupby(['Genres'])['Domestic Gross'].sum().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh', figsize = (8,6))
-    plt.title('Domestic Gross by Genre for films with an 8+ Rating on IMDB', fontsize = 19)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of Millions', fontsize = 16, fontweight = 'bold')
-    plt.ylabel('Genre', fontsize = 16, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-
-#if you care about ratings, Action, Thriller, Adventure, Sci-Fi is the way to go 
-```
-
-
-    
-![png](output_37_0.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (alljoined.groupby(['IMDB Year'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh')
-    plt.title('Average Domestic Gross by Year', fontsize = 16)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 10s of Millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('IMDB Year', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-#why 2018 so high?  
-```
-
-
-    
-![png](output_38_0.png)
-    
-
-
-
-```python
-just2018 = alljoined[alljoined['IMDB Year'] == 2018]
-just2018['Genres'].value_counts()
-```
-
-
-
-
-    Drama                         23
-    Comedy,Drama,Romance           7
-    Comedy                         7
-    Adventure,Animation,Comedy     6
-    Drama,Romance                  6
-                                  ..
-    Drama,History,Sport            1
-    Action,Fantasy,Horror          1
-    Adventure,Animation,Drama      1
-    Comedy,Crime                   1
-    Fantasy,Horror,Mystery         1
-    Name: Genres, Length: 88, dtype: int64
-
-
-
-
-```python
-with plt.style.context('bmh'):
-    (just2018.groupby(['Genres'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh', figsize = (8,6))
-    plt.title('Highest Domestic Grossing Genres in 2018', fontsize = 18)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 10s of Millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-#action/adventure/scifi
-
-```
-
-
-    
-![png](output_40_0.png)
-    
-
-
-
-```python
-with plt.style.context("bmh"):
-    imdb_8_or_better['Genres'].value_counts().head(15).plot(kind = 'barh', figsize = (8,6))
-    plt.title('Number of Movies per Genre with a rating of 8+ on IMDB', fontsize = 17)
-    plt.xlabel('Number of Movies Made', fontsize = 15, fontweight = 'bold')
-    plt.ylabel('Genre', fontsize = 15, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-    plt.gca().invert_yaxis()
-
-#if you're after ratings and don't necessarily care about popularity or gross income
-#number of votes should be considered for a better idea 
-#average number of votes per genres
-```
-
-
-    
-![png](output_41_0.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (alljoined.groupby(['Genres'])['Number of Votes'].sum().sort_values(ascending = False).head(10)/1000000).plot(kind = 'barh')
-    plt.title('Number of Votes per Genre on IMDB', fontsize = 17)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Votes in Millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 12)
-    plt.yticks(fontsize = 12)
-    
-#adventure/drama/sci fi draws more feedback than any, important because of the correlation between average votes and domestic gross
-```
-
-
-    
-![png](output_42_0.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (alljoined.groupby(['Studio'])['Domestic Gross'].mean().sort_values(ascending = False).head(10)/100000000).plot(kind = 'barh')
-    plt.title('Highest Domestic Grossing Studios', fontsize = 17)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Studio', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 12)
-    plt.yticks(fontsize = 12)
-```
-
-
-    
-![png](output_43_0.png)
-    
-
-
-
-```python
-BVonly = alljoined[alljoined['Studio']== 'BV']
-PDWonly = alljoined[alljoined['Studio']== 'P/DW']
-WBonly = alljoined[alljoined['Studio']== 'WB']
-```
-
-
-```python
-BVonly['Genres'].value_counts()
-
-with plt.style.context('bmh'):
-    (BVonly.groupby(['Title'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh')
-    plt.title('Highest Grossing BV Movies', fontsize = 18)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-```
-
-
-    
-![png](output_45_0.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (PDWonly.groupby(['Title'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
-    plt.title('Highest Grossing P/DW Movies', fontsize = 18)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-    
-PDWonly['Genres'].value_counts() 
-```
-
-
-
-
-    Action,Adventure,Animation    4
-    Adventure,Animation,Comedy    2
-    Comedy                        1
-    Action,Animation,Comedy       1
-    Comedy,Drama                  1
-    Action,Adventure,Sci-Fi       1
-    Name: Genres, dtype: int64
-
-
-
-
-    
-![png](output_46_1.png)
-    
-
-
-
-```python
-with plt.style.context('bmh'):
-    (WBonly.groupby(['Title'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh')
-    plt.title('Highest Grossing WB Movies', fontsize = 18)
-    plt.gca().invert_yaxis()
-    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
-    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
-    plt.xticks(fontsize = 13)
-    plt.yticks(fontsize = 13)
-
-WBonly['Genres'].value_counts()
-
-```
-
-
-
-
-    Action,Adventure,Fantasy      9
-    Action,Adventure,Sci-Fi       7
-    Drama                         4
-    Comedy,Drama,Romance          4
-    Adventure,Animation,Comedy    4
-                                 ..
-    Action,Adventure,Biography    1
-    Drama,Fantasy,Romance         1
-    Fantasy,Horror,Mystery        1
-    Action,Biography,Drama        1
-    Adventure,Comedy,Drama        1
-    Name: Genres, Length: 66, dtype: int64
-
-
-
-
-    
-![png](output_47_1.png)
-    
-
+I first created a correlation matrix to see which variables have a relationship with "Domestic Gross" or "Foreign Gross" 
 
 
 ```python
@@ -1576,7 +1311,480 @@ ax.set_yticklabels(ax.get_yticklabels(), fontsize = 13)
 
 
     
-![png](output_48_1.png)
+![png](output_37_1.png)
+    
+
+
+# Notable correlations: 
+
+Domestic Gross & Foreign Gross have a strong positive correlation of .83
+
+Number of Votes & Domestic Gross have a moderate-strong positive correlation of .66
+
+Number of Votes & Foreign Gross have a moderate-strong positive correlation of .56
+
+Average Rating and Number of Votes have a mild positive correlation of .28
+
+
+
+
+```python
+with plt.style.context('bmh'):
+    (alljoined.groupby(['Genres'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
+    plt.title('Average Domestic Box Office Gross by Genre', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 100s of Millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold') 
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+```
+
+
+    
+![png](output_39_0.png)
+    
+
+
+
+```python
+with plt.style.context('bmh'):
+    (alljoined_8_or_better.groupby(['Genres'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
+    plt.title('Average Domestic Gross by Genre for films with an 8+ Rating', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 100s of Millions', fontsize = 16, fontweight = 'bold')
+    plt.ylabel('Genre', fontsize = 16, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+
+#if you care about ratings, Action, Thriller, Adventure, Sci-Fi is the way to go 
+```
+
+
+    
+![png](output_40_0.png)
+    
+
+
+
+```python
+with plt.style.context('bmh'):
+    (alljoined.groupby(['IMDB Year'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh')
+    plt.title('Average Domestic Gross by Year', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 10s of Millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('IMDB Year', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+#why 2018 so high?  
+```
+
+
+    
+![png](output_41_0.png)
+    
+
+
+I created a dataset from the master with data from only 2018, with the intention of exploring why it was the highest-grossing year. 
+
+
+```python
+just2018 = alljoined[alljoined['IMDB Year'] == 2018]
+just2018['Genres'].value_counts()
+```
+
+
+
+
+    Drama                      23
+    Comedy,Drama,Romance        7
+    Comedy                      7
+    Action,Crime,Drama          6
+    Biography,Drama             6
+                               ..
+    Comedy,Family,Fantasy       1
+    Adventure,Comedy,Sci-Fi     1
+    Comedy,Musical,Romance      1
+    Mystery,Thriller            1
+    Drama,Horror,Sci-Fi         1
+    Name: Genres, Length: 88, dtype: int64
+
+
+
+The graph below shows that Action/Adventure/Sci-fi was the highest grossing genre in the highest grossing year, 2018. 
+
+
+```python
+with plt.style.context('bmh'):
+    (just2018.groupby(['Genres'])['Domestic Gross'].mean().sort_values(ascending = False).head(15)/10000000).plot(kind = 'barh')
+    plt.title('Average Domestic Gross by Genre 2018', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 10s of Millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+#action/adventure/scifi
+
+```
+
+
+    
+![png](output_45_0.png)
+    
+
+
+I was interested in exploring which genres had the most movies with a "high rating", meaning an 8 or better on IMDB. The bar graph below shows that Documentaries are the highest rated genre, with more than 2500 movies with a high rating. However, the graph "Sum Domestic Gross by Genre for films with an 8+ Rating on IMDB" lists "Documentary" toward the bottom of the list, with ~1.5 hundred million. This could be useful for gaining a reputation with independent documentarians. 
+
+
+```python
+with plt.style.context("bmh"):
+    imdb_8_or_better['Genres'].value_counts().head(15).plot(kind = 'barh')
+    plt.title('Number of Movies per Genre with a rating of 8+ on IMDB', fontsize = 16, fontweight = 'bold')
+    plt.xlabel('Number of Movies Made', fontsize = 15, fontweight = 'bold')
+    plt.ylabel('Genre', fontsize = 15, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+    plt.gca().invert_yaxis()
+
+#if you're after ratings and don't necessarily care about popularity or gross income
+#number of votes should be considered for a better idea 
+#average number of votes per genres
+```
+
+
+    
+![png](output_47_0.png)
+    
+
+
+Because of the strong positive correlation between Number of Votes and Domestic Box Office Gross, I decided to explore which genres garnered the most votes. 
+
+
+```python
+with plt.style.context('bmh'):
+    (alljoined.groupby(['Genres'])['Number of Votes'].sum().sort_values(ascending = False).head(10)/1000000).plot(kind = 'barh')
+    plt.title('Number of Votes per Genre on IMDB', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Votes in Millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Genre', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 12)
+    plt.yticks(fontsize = 12)
+
+```
+
+
+    
+![png](output_49_0.png)
+    
+
+
+I was interested in which production studios had the highest Domestic Box Office revenue, and which of their movies did best. 
+
+
+```python
+with plt.style.context('bmh'):
+    (alljoined.groupby(['Studio'])['Domestic Gross'].sum().sort_values(ascending = False).head(10)/1000000000).plot(kind = 'barh')
+    plt.title('Total Domestic Gross by Studio', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in Billions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Studio', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 12)
+    plt.yticks(fontsize = 12)
+```
+
+
+    
+![png](output_51_0.png)
+    
+
+
+The top 3 studios that made the most money in the Domestic Box Office are BV, Universal, and Fox.
+
+
+```python
+BVonly = alljoined[alljoined['Studio']== 'BV']
+UNIonly = alljoined[alljoined['Studio']== 'Uni.']
+FOXonly = alljoined[alljoined['Studio']== 'Fox']
+```
+
+
+```python
+UNIonly.dropna()
+FOXonly.dropna()
+BVonly.dropna()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Title</th>
+      <th>Studio</th>
+      <th>Domestic Gross</th>
+      <th>Foreign Gross</th>
+      <th>BOM Year</th>
+      <th>tconst</th>
+      <th>Original Title</th>
+      <th>IMDB Year</th>
+      <th>Runtime (in minutes)</th>
+      <th>Genres</th>
+      <th>Average Rating</th>
+      <th>Number of Votes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Toy Story 3</td>
+      <td>BV</td>
+      <td>415000000.0</td>
+      <td>652000000.0</td>
+      <td>2010</td>
+      <td>tt0435761</td>
+      <td>Toy Story 3</td>
+      <td>2010</td>
+      <td>103.0</td>
+      <td>Adventure,Animation,Comedy</td>
+      <td>8.3</td>
+      <td>682218.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Tangled</td>
+      <td>BV</td>
+      <td>200800000.0</td>
+      <td>391000000.0</td>
+      <td>2010</td>
+      <td>tt0398286</td>
+      <td>Tangled</td>
+      <td>2010</td>
+      <td>100.0</td>
+      <td>Adventure,Animation,Comedy</td>
+      <td>7.8</td>
+      <td>366366.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Prince of Persia: The Sands of Time</td>
+      <td>BV</td>
+      <td>90800000.0</td>
+      <td>245600000.0</td>
+      <td>2010</td>
+      <td>tt0473075</td>
+      <td>Prince of Persia: The Sands of Time</td>
+      <td>2010</td>
+      <td>116.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>6.6</td>
+      <td>254975.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>The Sorcerer's Apprentice</td>
+      <td>BV</td>
+      <td>63200000.0</td>
+      <td>152100000.0</td>
+      <td>2010</td>
+      <td>tt0963966</td>
+      <td>The Sorcerer's Apprentice</td>
+      <td>2010</td>
+      <td>109.0</td>
+      <td>Action,Adventure,Family</td>
+      <td>6.1</td>
+      <td>143862.0</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>The Last Song</td>
+      <td>BV</td>
+      <td>63000000.0</td>
+      <td>26100000.0</td>
+      <td>2010</td>
+      <td>tt1294226</td>
+      <td>The Last Song</td>
+      <td>2010</td>
+      <td>107.0</td>
+      <td>Drama,Music,Romance</td>
+      <td>6.0</td>
+      <td>74914.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2753</th>
+      <td>Ralph Breaks the Internet</td>
+      <td>BV</td>
+      <td>201100000.0</td>
+      <td>328100000.0</td>
+      <td>2018</td>
+      <td>tt5848272</td>
+      <td>Ralph Breaks the Internet</td>
+      <td>2018</td>
+      <td>112.0</td>
+      <td>Adventure,Animation,Comedy</td>
+      <td>7.1</td>
+      <td>85694.0</td>
+    </tr>
+    <tr>
+      <th>2757</th>
+      <td>Solo: A Star Wars Story</td>
+      <td>BV</td>
+      <td>213800000.0</td>
+      <td>179200000.0</td>
+      <td>2018</td>
+      <td>tt3778644</td>
+      <td>Solo: A Star Wars Story</td>
+      <td>2018</td>
+      <td>135.0</td>
+      <td>Action,Adventure,Fantasy</td>
+      <td>7.0</td>
+      <td>226243.0</td>
+    </tr>
+    <tr>
+      <th>2763</th>
+      <td>Mary Poppins Returns</td>
+      <td>BV</td>
+      <td>172000000.0</td>
+      <td>177600000.0</td>
+      <td>2018</td>
+      <td>tt5028340</td>
+      <td>Mary Poppins Returns</td>
+      <td>2018</td>
+      <td>130.0</td>
+      <td>Comedy,Family,Fantasy</td>
+      <td>6.9</td>
+      <td>52103.0</td>
+    </tr>
+    <tr>
+      <th>2774</th>
+      <td>The Nutcracker and the Four Realms</td>
+      <td>BV</td>
+      <td>54900000.0</td>
+      <td>119100000.0</td>
+      <td>2018</td>
+      <td>tt5523010</td>
+      <td>The Nutcracker and the Four Realms</td>
+      <td>2018</td>
+      <td>99.0</td>
+      <td>Adventure,Family,Fantasy</td>
+      <td>5.5</td>
+      <td>18734.0</td>
+    </tr>
+    <tr>
+      <th>2782</th>
+      <td>A Wrinkle in Time</td>
+      <td>BV</td>
+      <td>100500000.0</td>
+      <td>32200000.0</td>
+      <td>2018</td>
+      <td>tt1620680</td>
+      <td>A Wrinkle in Time</td>
+      <td>2018</td>
+      <td>109.0</td>
+      <td>Adventure,Family,Fantasy</td>
+      <td>4.2</td>
+      <td>34888.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>90 rows × 12 columns</p>
+</div>
+
+
+
+
+```python
+BVonly['Genres'].value_counts()
+BVonly = BVonly.drop_duplicates(subset = 'Title')
+        
+
+with plt.style.context('bmh'):
+    (BVonly.groupby(['Title'])['Domestic Gross'].sum().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
+    plt.title('Highest Grossing BV Movies', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in Hundreds of Millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+    
+
+```
+
+
+    
+![png](output_55_0.png)
+    
+
+
+
+```python
+UNIonly = UNIonly.drop_duplicates(subset = 'Title')
+
+with plt.style.context('bmh'):
+    (UNIonly.groupby(['Title'])['Domestic Gross'].sum().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
+    plt.title('Highest Grossing Universal Movies', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+    
+
+```
+
+
+    
+![png](output_56_0.png)
+    
+
+
+
+```python
+FOXonly = FOXonly.drop_duplicates(subset = 'Title')
+
+with plt.style.context('bmh'):
+    (FOXonly.groupby(['Title'])['Domestic Gross'].sum().sort_values(ascending = False).head(15)/100000000).plot(kind = 'barh')
+    plt.title('Highest Grossing Fox Movies', fontsize = 16, fontweight = 'bold')
+    plt.gca().invert_yaxis()
+    plt.xlabel('Domestic Gross in 100s of millions', fontsize = 14, fontweight = 'bold')
+    plt.ylabel('Title', fontsize = 14, fontweight = 'bold')
+    plt.xticks(fontsize = 13)
+    plt.yticks(fontsize = 13)
+
+```
+
+
+    
+![png](output_57_0.png)
     
 
 
