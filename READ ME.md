@@ -1,4 +1,4 @@
-# Flatiron Data Science Phase 1 Project
+# Flatiron Data Science Phase 1 Project README
 
 ## **Author:** Madeleine Reiser
 ***
