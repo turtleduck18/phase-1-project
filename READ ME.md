@@ -123,236 +123,40 @@ WB: $ 89,799,160
     
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Title</th>
-      <th>Studio</th>
-      <th>Domestic Gross</th>
-      <th>Foreign Gross</th>
-      <th>tconst</th>
-      <th>Original Title</th>
-      <th>IMDB Year</th>
-      <th>Runtime (in minutes)</th>
-      <th>Genres</th>
-      <th>Average Rating</th>
-      <th>Number of Votes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Toy Story 3</td>
-      <td>BV</td>
-      <td>415000000.0</td>
-      <td>652000000.0</td>
-      <td>tt0435761</td>
-      <td>Toy Story 3</td>
-      <td>2010</td>
-      <td>103.0</td>
-      <td>Adventure,Animation,Comedy</td>
-      <td>8.3</td>
-      <td>682218.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Tangled</td>
-      <td>BV</td>
-      <td>200800000.0</td>
-      <td>391000000.0</td>
-      <td>tt0398286</td>
-      <td>Tangled</td>
-      <td>2010</td>
-      <td>100.0</td>
-      <td>Adventure,Animation,Comedy</td>
-      <td>7.8</td>
-      <td>366366.0</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Prince of Persia: The Sands of Time</td>
-      <td>BV</td>
-      <td>90800000.0</td>
-      <td>245600000.0</td>
-      <td>tt0473075</td>
-      <td>Prince of Persia: The Sands of Time</td>
-      <td>2010</td>
-      <td>116.0</td>
-      <td>Action,Adventure,Fantasy</td>
-      <td>6.6</td>
-      <td>254975.0</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>The Sorcerer's Apprentice</td>
-      <td>BV</td>
-      <td>63200000.0</td>
-      <td>152100000.0</td>
-      <td>tt0963966</td>
-      <td>The Sorcerer's Apprentice</td>
-      <td>2010</td>
-      <td>109.0</td>
-      <td>Action,Adventure,Family</td>
-      <td>6.1</td>
-      <td>143862.0</td>
-    </tr>
-    <tr>
-      <th>68</th>
-      <td>The Last Song</td>
-      <td>BV</td>
-      <td>63000000.0</td>
-      <td>26100000.0</td>
-      <td>tt1294226</td>
-      <td>The Last Song</td>
-      <td>2010</td>
-      <td>107.0</td>
-      <td>Drama,Music,Romance</td>
-      <td>6.0</td>
-      <td>74914.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2753</th>
-      <td>Ralph Breaks the Internet</td>
-      <td>BV</td>
-      <td>201100000.0</td>
-      <td>328100000.0</td>
-      <td>tt5848272</td>
-      <td>Ralph Breaks the Internet</td>
-      <td>2018</td>
-      <td>112.0</td>
-      <td>Adventure,Animation,Comedy</td>
-      <td>7.1</td>
-      <td>85694.0</td>
-    </tr>
-    <tr>
-      <th>2757</th>
-      <td>Solo: A Star Wars Story</td>
-      <td>BV</td>
-      <td>213800000.0</td>
-      <td>179200000.0</td>
-      <td>tt3778644</td>
-      <td>Solo: A Star Wars Story</td>
-      <td>2018</td>
-      <td>135.0</td>
-      <td>Action,Adventure,Fantasy</td>
-      <td>7.0</td>
-      <td>226243.0</td>
-    </tr>
-    <tr>
-      <th>2763</th>
-      <td>Mary Poppins Returns</td>
-      <td>BV</td>
-      <td>172000000.0</td>
-      <td>177600000.0</td>
-      <td>tt5028340</td>
-      <td>Mary Poppins Returns</td>
-      <td>2018</td>
-      <td>130.0</td>
-      <td>Comedy,Family,Fantasy</td>
-      <td>6.9</td>
-      <td>52103.0</td>
-    </tr>
-    <tr>
-      <th>2774</th>
-      <td>The Nutcracker and the Four Realms</td>
-      <td>BV</td>
-      <td>54900000.0</td>
-      <td>119100000.0</td>
-      <td>tt5523010</td>
-      <td>The Nutcracker and the Four Realms</td>
-      <td>2018</td>
-      <td>99.0</td>
-      <td>Adventure,Family,Fantasy</td>
-      <td>5.5</td>
-      <td>18734.0</td>
-    </tr>
-    <tr>
-      <th>2782</th>
-      <td>A Wrinkle in Time</td>
-      <td>BV</td>
-      <td>100500000.0</td>
-      <td>32200000.0</td>
-      <td>tt1620680</td>
-      <td>A Wrinkle in Time</td>
-      <td>2018</td>
-      <td>109.0</td>
-      <td>Adventure,Family,Fantasy</td>
-      <td>4.2</td>
-      <td>34888.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>90 rows × 11 columns</p>
-</div>
-
-
 
 The 5 Highest Grossing BV movies are:
 
     Black Panther:                  $700,100,000
-Avengers: Infinity War:         $678,800,000 
+    Avengers: Infinity War:         $678,800,000 
     Star Wars: The Last Jedi:       $620,200,000 
-Incredibles 2:                  $608,600,000 
+    Incredibles 2:                  $608,600,000 
     Rogue One: A Star Wars Story    $532,200,000
 
-
-
-    
 ![png](output_30_0.png)
     
+
 
 
 The 5 Highest Grossing P/DW movies are:
 
     Transformers: Dark of the Moon:        $352,400,000
-Shrek Forever After:                   $238,700,000 
+    Shrek Forever After:                   $238,700,000 
     How to Train Your Dragon:              $217,600,000 
-Madagascar 3: Europe's Most Wanted:    $216,400,000 
+    Madagascar 3: Europe's Most Wanted:    $216,400,000 
     Kung Fu Panda 2:                       $165,200,000
 
-    
 ![png](output_32_0.png)
     
+
 
 
 The 5 Highest Grossing WB movies are:
 
     The Dark Knight Rises:              $448,100,000
-Wonder Woman:                       $412,600,000 
+    Wonder Woman:                       $412,600,000 
     American Sniper:                    $350,100,000 
-Aquaman:                            $335,100,000 
+    Aquaman:                            $335,100,000 
     Batman v Superman: Dawn of Justice: $330,400,000
-
-
     
 ![png](output_34_0.png)
     
