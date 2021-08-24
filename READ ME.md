@@ -17,30 +17,6 @@ Microsoft Stake Owners are interested in developing their own streaming service 
 Using datasets from IMDB and Box Office Mojo, this project explores how box office revenue is correlated with variables such as ratings, popularity (which is measured by number of reviews left by viewers), specific studios and genres.  
 
 
-## Import necessary packages and load Datasets
-
-
-```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import gzip
-import json
-import requests
-import re
-from bs4 import BeautifulSoup
-%matplotlib inline
-```
-
-
-```python
-#load data 
-imdb_title_ratings = pd.read_csv('imdb.title.ratings.csv.gz')
-imdb_title_basics = pd.read_csv('imdb.title.basics.csv.gz')
-bom_movie_gross = pd.read_csv('bom.movie_gross.csv.gz')
-```
-
 ## IMDB Ratings Dataset
 
 Contains "tconst", which appears to be the code for each movie, the film's average rating, and the number of votes on IMDB
