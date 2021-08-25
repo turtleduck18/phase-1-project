@@ -43,44 +43,44 @@ The correlation between Number of Votes & Foreign Gross is a little weaker, at .
 
 Finally, Average Rating and Number of Votes have a mild positive correlation of .28, meaning that films with a higher rating can bring in more votes, or vice versa.
     
-![png](output_11_1.png)
+![png](images/output_11_1.png)
     
 
 
 
 This graph represents the mean Domestic Gross of the highest-grossing genres from 2010-2018. Adventure/Drama/Sport films blew the rest out of the water and made the most money at $400,700,000.
  
-![png](output_13_0.png)
+![png](images/output_13_0.png)
     
 
 
 "Mean Domestic Gross by Genre for films with an 8+ Rating" displays that the average Domestic Gross for Action/Thriller movies with a high rating was $448,100,000.
     
-![png](output_15_1.png)
+![png](images/output_15_1.png)
     
 
 
 "Mean Domestic Gross by Year" depicted the average Domestic Gross a film made for each year from 2010-2018. The year 2018 had the highest average Domestic Gross of $46,349,360. This number seemed low compared to the other graphs, but that's because the average was affected by low-grossing films.
     
-![png](output_17_0.png)
+![png](images/output_17_0.png)
     
 
 
 "Mean Domestic Gross by Genre 2018" shows the average Domestic Gross a film from a certain genre(s) made in the year 2018. Again, Action/Adventure/Sci-fi makes the highest grossing films on average with a Domestic Gross of $412,300,000.
     
-![png](output_20_0.png)
+![png](images/output_20_0.png)
     
 
 
 I was interested in exploring which genres had the most movies with a "high rating", meaning an 8 or better on IMDB. The bar graph "Number of Movies per Genre with a rating of 8+ on IMDB" shows that Documentaries have the most movies with a rating of 8+ at 2715 films.
    
-![png](output_22_0.png)
+![png](images/output_22_0.png)
     
 
 
 Because of the strong positive correlation between Number of Votes and Domestic Box Office Gross, I decided to explore which genres garnered the most votes. Again, Action/Adventure/Sci-fi had a giant lead with a total of 19,721,992 votes. Adventure/Animation/Comedy had 8,037,681 votes, and Action/Adventure/Comedy had 7,763,568.
     
-![png](output_24_0.png)
+![png](images/output_24_0.png)
     
 
 
@@ -95,7 +95,7 @@ P/DW: $ 168,290,000
 WB: $ 89,799,160
 
     
-![png](output_26_0.png)
+![png](images/output_26_0.png)
     
 
 
@@ -108,7 +108,7 @@ The 5 Highest Grossing BV movies are:
     Incredibles 2:                  $608,600,000 
     Rogue One: A Star Wars Story    $532,200,000
 
-![png](output_30_0.png)
+![png](images/output_30_0.png)
     
 
 
@@ -121,7 +121,7 @@ The 5 Highest Grossing P/DW movies are:
     Madagascar 3: Europe's Most Wanted:    $216,400,000 
     Kung Fu Panda 2:                       $165,200,000
 
-![png](output_32_0.png)
+![png](images/output_32_0.png)
     
 
 
@@ -134,7 +134,7 @@ The 5 Highest Grossing WB movies are:
     Aquaman:                            $335,100,000 
     Batman v Superman: Dawn of Justice: $330,400,000
     
-![png](output_34_0.png)
+![png](images/output_34_0.png)
     
 
 
